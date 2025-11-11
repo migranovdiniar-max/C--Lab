@@ -2,8 +2,12 @@
 #include <iostream>
 #include <limits>
 
+// Глобальная переменная для имени файла по умолчанию
+std::string currentFilename = "university_data.txt";
+
 void displayMenu() {
     std::cout << "\n=== University Management System ===\n";
+    std::cout << "Current file: " << currentFilename << std::endl;
     std::cout << "1. Add Student\n";
     std::cout << "2. Add Teacher\n";
     std::cout << "3. Add Administrative Staff\n";
@@ -12,6 +16,7 @@ void displayMenu() {
     std::cout << "6. Save to File\n";
     std::cout << "7. Load from File\n";
     std::cout << "8. Edit Item\n";
+    std::cout << "9. Change Filename\n";  // Новый пункт меню
     std::cout << "0. Exit\n";
     std::cout << "Choose an option: ";
 }
@@ -69,19 +74,39 @@ int main() {
                     keeper.printAll();
                     break;
                 case 6: {
-                    std::string filename;
-                    std::cout << "Enter filename: ";
-                    std::getline(std::cin, filename);
-                    keeper.saveToFile(filename);
-                    std::cout << "Data saved successfully!\n";
+                    std::cout << "Save to current file '" << currentFilename << "'? (y/n): ";
+                    char confirm;
+                    std::cin >> confirm;
+                    std::cin.ignore();
+                    
+                    if (confirm == 'y' || confirm == 'Y') {
+                        keeper.saveToFile(currentFilename);
+                        std::cout << "Data saved successfully to " << currentFilename << "!\n";
+                    } else {
+                        std::string filename;
+                        std::cout << "Enter filename: ";
+                        std::getline(std::cin, filename);
+                        keeper.saveToFile(filename);
+                        std::cout << "Data saved successfully to " << filename << "!\n";
+                    }
                     break;
                 }
                 case 7: {
-                    std::string filename;
-                    std::cout << "Enter filename: ";
-                    std::getline(std::cin, filename);
-                    keeper.loadFromFile(filename);
-                    std::cout << "Data loaded successfully!\n";
+                    std::cout << "Load from current file '" << currentFilename << "'? (y/n): ";
+                    char confirm;
+                    std::cin >> confirm;
+                    std::cin.ignore();
+                    
+                    if (confirm == 'y' || confirm == 'Y') {
+                        keeper.loadFromFile(currentFilename);
+                        std::cout << "Data loaded successfully from " << currentFilename << "!\n";
+                    } else {
+                        std::string filename;
+                        std::cout << "Enter filename: ";
+                        std::getline(std::cin, filename);
+                        keeper.loadFromFile(filename);
+                        std::cout << "Data loaded successfully from " << filename << "!\n";
+                    }
                     break;
                 }
                 case 8: {
@@ -99,6 +124,13 @@ int main() {
                         keeper.get(index - 1)->setData();
                         std::cout << "Item edited successfully!\n";
                     }
+                    break;
+                }
+                case 9: {
+                    std::cout << "Current filename: " << currentFilename << std::endl;
+                    std::cout << "Enter new filename: ";
+                    std::getline(std::cin, currentFilename);
+                    std::cout << "Filename changed to: " << currentFilename << std::endl;
                     break;
                 }
                 case 0:
