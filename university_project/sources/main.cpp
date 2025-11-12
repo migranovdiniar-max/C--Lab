@@ -1,6 +1,7 @@
 #include "Keeper.h"
 #include <iostream>
 #include <limits>
+// ---------------------------------------------------
 
 // Глобальная переменная для имени файла по умолчанию
 std::string currentFilename = "university_data.txt";
