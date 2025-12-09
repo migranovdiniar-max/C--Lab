@@ -1,29 +1,40 @@
-
 #ifndef SIGN_H
 #define SIGN_H
 #include <iostream>
-class SignException: public std::exception{
-    const char* msg;
-public:
-    SignException(const char* m): msg(m){}
-    const char* what() const noexcept override { return msg; }
-};
+
 class SIGN {
+private:
     char* surname;
     char* name;
-    int birthday[3];
+    char* zodiac;
+    int birthday[3]; // day, month, year
+
 public:
+    // Конструкторы
     SIGN();
-    SIGN(const char* s, const char* n, int d, int m, int y);
+    SIGN(const char* s, const char* n, const char* z, int d, int m, int y);
     SIGN(const SIGN& other);
+
+    // Деструктор
     ~SIGN();
+
+    // set / get
     void setSurname(const char* s);
-    void setName(const char* n);
+    void setName(const char* s);
+    void setZodiac(const char* s);
     void setBirthday(int d, int m, int y);
-    const char* getSurname() const;
-    const char* getName() const;
-    void getBirthday(int& d,int& m,int& y) const;
-    friend std::ostream& operator<<(std::ostream&, const SIGN&);
-    friend std::istream& operator>>(std::istream&, SIGN&);
+
+    const char* getSurname() const { return surname; }
+    const char* getName() const { return name; }
+    const char* getZodiac() const { return zodiac; }
+    const int* getBirthday() const { return birthday; }
+
+    // Перегрузка операторов ввода/вывода
+    friend std::ostream& operator<<(std::ostream& os, const SIGN& s);
+    friend std::istream& operator>>(std::istream& is, SIGN& s);
+
+    // Вывод
+    void print() const;
 };
+
 #endif
