@@ -23,7 +23,7 @@ SIGN::SIGN(const SIGN& other) {
     name = new char[strlen(other.name)+1]; strcpy(name,other.name);
     zodiac = new char[strlen(other.zodiac)+1]; strcpy(zodiac,other.zodiac);
     birth[0]=other.birth[0]; birth[1]=other.birth[1]; birth[2]=other.birth[2];
-    std::cout << "[SIGN] copy constructor\n";
+    // std::cout << "[SIGN] copy constructor\n";
 }
 
 SIGN::~SIGN() {
