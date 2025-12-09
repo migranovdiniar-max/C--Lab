@@ -1,46 +1,34 @@
 #include <iostream>
+#include <windows.h>
+#include <limits>
 #include "filehandler.h"
 
-void menu() {
-    std::cout << "\n====== MENU ======\n";
-    std::cout << "1. Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð½Ð¾Ð²Ñ‹Ð¹ Ñ„Ð°Ð¹Ð» (Ð¿ÐµÑ€ÐµÐ·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ data.txt) â€” Ð²Ð²ÐµÑÑ‚Ð¸ N Ð·Ð°Ð¿Ð¸ÑÐµÐ¹\n";
-    std::cout << "2. Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð·Ð°Ð¿Ð¸ÑÐ¸ (append, Ð·Ð°Ñ‚ÐµÐ¼ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ð¸ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ)\n";
-    std::cout << "3. ÐŸÐ¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð²ÑÐµ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ð¸Ð· data.txt\n";
-    std::cout << "4. ÐŸÐ¾Ð¸ÑÐº Ð¿Ð¾ Ñ„Ð°Ð¼Ð¸Ð»Ð¸Ð¸ (Ñ‡Ð¸Ñ‚Ð°ÐµÑ‚ Ð¸Ð· data.txt)\n";
-    std::cout << "5. Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» data.txt\n";
-    std::cout << "0. Ð’Ñ‹Ñ…Ð¾Ð´\n";
-    std::cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¾Ð¿Ñ†Ð¸ÑŽ: ";
-}
+int main(){
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
-int main() {
-    // ÐŸÐµÑ€ÐµÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ ÐºÐ¾Ð½ÑÐ¾Ð»ÑŒ Ð½Ð° UTF-8
-    SetConsoleCP(CP_UTF8);   // Ð²Ð²Ð¾Ð´
-    SetConsoleOutputCP(CP_UTF8); // Ð²Ñ‹Ð²Ð¾Ð´
+    int choice;
+    do{
+        std::cout<<"\n====== MENU ======\n";
+        std::cout<<"1. Ñîçäàòü íîâûé ôàéë (data.txt) è ââåñòè N çàïèñåé\n";
+        std::cout<<"2. Äîáàâèòü çàïèñè ê ñóùåñòâóþùåìó ôàéëó (append)\n";
+        std::cout<<"3. Ïðîñìîòðåòü âñå çàïèñè èç data.txt\n";
+        std::cout<<"4. Ïîèñê ÷åëîâåêà ïî ôàìèëèè\n";
+        std::cout<<"5. Óäàëèòü ôàéë data.txt\n";
+        std::cout<<"0. Âûõîä\n";
+        std::cout<<"Âûáåðèòå ïóíêò: ";
+        std::cin>>choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 
-    // Ð”Ð»Ñ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ð¹ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ cout/cin Ñ UTF-8
-    _setmode(_fileno(stdout), _O_U8TEXT);
-    _setmode(_fileno(stdin), _O_U8TEXT);
-    
-    bool running = true;
-    while (running) {
-        menu();
-        int opt;
-        if (!(std::cin >> opt)) {
-            std::cin.clear(); std::cin.ignore(1000,'\n');
-            std::cout << "ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð²Ð²Ð¾Ð´, Ð¿Ð¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÑÐ½Ð¾Ð²Ð°.\n";
-            continue;
-        }
-        std::cin.ignore(1000,'\n');
-        switch (opt) {
+        switch(choice){
             case 1: createNewFile(); break;
             case 2: appendToFile(); break;
             case 3: showAll(); break;
             case 4: searchBySurname(); break;
             case 5: deleteDataFile(); break;
-            case 0: running = false; break;
-            default: std::cout << "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð°Ñ Ð¾Ð¿Ñ†Ð¸Ñ.\n";
+            case 0: std::cout<<"Âûõîä.\n"; break;
+            default: std::cout<<"Íåâåðíûé âûáîð.\n";
         }
-    }
-    std::cout << "Ð’Ñ‹Ñ…Ð¾Ð´. Ð”Ð¾ ÑÐ²Ð¸Ð´Ð°Ð½Ð¸Ñ.\n";
+    }while(choice!=0);
     return 0;
 }
